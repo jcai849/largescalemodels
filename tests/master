@@ -1,5 +1,6 @@
 library(largeScaleR)
 library(largeScaleModelR)
+
 userProcess(host="localhost")
 commsProcess(host="localhost", port=6379L, execute=FALSE)
 logProcess(host="localhost", port=5140L, execute=FALSE)
@@ -30,3 +31,4 @@ model <- dlm(Sepal.Length ~ Sepal.Width, x)
 
 library(biglm)
 print(emerge(model))
+final(1)
