@@ -3,15 +3,14 @@ function(formula, data, weights=NULL, sandwich=FALSE) {
         stopifnot(largeScaleR::is.distObjRef(data))
         chunks <- largeScaleR::chunkRef(data)
         stopifnot(length(chunks) > 0L)
-        currcall <- sys.call()
-        scform <- c(alist(...=), call("quote", currcall))
+	sys.call <- largeScaleR::currCallFun()
         init <- largeScaleR::do.ccall("biglm::biglm",
-                         list(formula=largeScaleR::stripEnv(formula),
+                         list(formula=largeScaleR::envBase(formula),
                               data=chunks[[1]],
-                              weights=largeScaleR::stripEnv(weights),
+                              weights=largeScaleR::envBase(weights),
                               sandwich=sandwich),
                          target=chunks[[1]],
-                         mask=list(sys.call=scform))
+                         insert=list(sys.call=largeScaleR::envBase(sys.call)))
         if (length(chunks) != 1L)
 		largeScaleR::dreduce("biglm::update.biglm",
 				     largeScaleR::distObjRef(chunks[-1]), init)
