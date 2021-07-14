@@ -17,31 +17,33 @@ ddf <- read.lcsv("~/1987.csv", header=TRUE, colTypes=cols, max.size=42*1024^2)
 #cat("preview of distributed data frame:\n")
 #preview(ddf)
 
-y <- ddf$ArrDelay > 15
-form <- y ~ DepDelay + DepTime + DayOfWeek
-
-glmSetup <- function(form, y, X) {
+glmSetup <- function(form, ddf) {
 	a <- ls()
 	keep <- new.env(parent=baseenv())
 	lapply(a, function(x) assign(x, get(x), keep))
 	with(keep, {
-		       fam	<- stats::binomial()
-		       mm	<- stats::model.matrix(form, cbind(y, X))
-		       beta	<- NULL
-		       NOBS	<- NROW(y)
-		       WEIGHTS	<- rep.int(1, NROW(y))
-		       OFFSET	<- rep.int(0, NROW(y))
-		       mustart	<- (WEIGHTS * y + 0.5)/(WEIGHTS + 1)
-		       eta	<- fam$linkfun(mustart)
-		       mu	<- fam$linkinv(eta)
-		       mu.eta.val<- fam$mu.eta(eta)
-		       z	<- (eta - OFFSET) + (y - mu) / mu.eta.val
-		       w	<- sqrt((WEIGHTS * mu.eta.val^2) / fam$variance(mu))
+		     ddf$DepDelay[is.na(ddf$DepDelay)] <- 0
+		     ddf$Late	<- ddf$DepDelay > 15
+		     fam	<- stats::binomial()
+		     mm		<- stats::model.matrix(form, ddf)
+		     y		<- matrix(ddf[rownames(mm), all.vars(form)[1]], ncol=1)
+		     beta	<- NULL
+		     NOBS	<- NROW(y)
+		     WEIGHTS	<- rep.int(1, NROW(y))
+		     OFFSET	<- rep.int(0, NROW(y))
+		     mustart	<- (WEIGHTS * y + 0.5)/(WEIGHTS + 1)
+		     eta	<- fam$linkfun(mustart)
+		     mu		<- fam$linkinv(eta)
+		     mu.eta.val	<- fam$mu.eta(eta)
+		     z		<- (eta - OFFSET) + (y - mu) / mu.eta.val
+		     w		<- sqrt((WEIGHTS * mu.eta.val^2) / fam$variance(mu))
 	  })
 	keep
 }
 
-init <- do.dcall(envBase(glmSetup), list(I(form), y, ddf))
+form <- Late ~ DepDelay + DepTime + DayOfWeek
+
+init <- do.dcall(envBase(glmSetup), list(I(form), ddf))
 
 #cat("\npreview of kept variables:\n")
 #ls.str(emerge(chunkRef(init)[[3]]))
@@ -49,11 +51,15 @@ init <- do.dcall(envBase(glmSetup), list(I(form), y, ddf))
 epsilon <- 1e-08
 maxit <- 8
 
-dev <- sum(do.dcall(envBase(function(keep) with(keep, fam$dev.resids(y, mu, WEIGHTS))),
+dev <- sum(do.dcall(envBase(function(keep) with(keep,
+						fam$dev.resids(y, mu, WEIGHTS))),
 		list(init)),
 	   na.rm = TRUE)
+
 #for (iter in 1L:maxit) {
-XtX <- do.dcall(envBase(function(keep) with(keep, crossprod(mm[,,drop=FALSE] * w))),
+XtX <- do.dcall(envBase(function(keep) with(keep,
+					    crossprod(mm[,,drop=FALSE] * as.numeric(w)))),
 		list(init))
+emerge(chunkRef(XtX)[[2]])
 
 final(1)
