@@ -25,9 +25,9 @@ glmSetup <- function(form, ddf) {
 		     ddf$DepDelay[is.na(ddf$DepDelay)] <- 0
 		     ddf$Late	<- ddf$DepDelay > 15
 		     fam	<- stats::binomial()
+		     beta	<- NULL
 		     mm		<- stats::model.matrix(form, ddf)
 		     y		<- matrix(ddf[rownames(mm), all.vars(form)[1]], ncol=1)
-		     beta	<- NULL
 		     NOBS	<- NROW(y)
 		     WEIGHTS	<- rep.int(1, NROW(y))
 		     OFFSET	<- rep.int(0, NROW(y))
@@ -56,10 +56,39 @@ dev <- sum(do.dcall(envBase(function(keep) with(keep,
 		list(init)),
 	   na.rm = TRUE)
 
-#for (iter in 1L:maxit) {
-XtX <- do.dcall(envBase(function(keep) with(keep,
-					    crossprod(mm[,,drop=FALSE] * as.numeric(w)))),
-		list(init))
-emerge(chunkRef(XtX)[[2]])
+for (iter in 1L:maxit) {
+	XtX <- Reduce('+', lapply(chunkRef(do.dcall(envBase(function(keep) with(keep,
+										crossprod(mm[,,drop=FALSE] * as.numeric(w)))),
+						  list(init))),
+				emerge))
+
+	Xty <- Reduce('+', lapply(chunkRef(do.dcall(envBase(function(keep) with(keep,
+										t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w)))),
+						  list(init))),
+				emerge))
+	beta <- solve(XtX, Xty)
+
+	invisible(do.dcall(envBase(function(keep, beta_hat) {
+					   assign("beta_hat", beta_hat, keep)
+					   with(keep, {
+							beta <- drop(mm %*% beta_hat) + OFFSET
+							mu <- fam$linkinv(eta)
+							mu.eta.val <- fam$mu.eta(eta)
+							z <- (eta - OFFSET) + (y - mu) / mu.eta.val
+							w <- sqrt((WEIGHTS * mu.eta.val^2) / fam$variance(mu))
+							return(0L)
+						  })
+				}),
+			   list(init, I(beta))))
+
+	devold <- dev
+	dev <- sum(do.dcall(envBase(function(keep) with(keep,
+							fam$dev.resids(y, mu, WEIGHTS))),
+			    list(init)),
+		   na.rm = TRUE)
+
+	cat("Deviance = ", dev, " Iterations - ", iter, "\n", sep = "")
+	if (abs(dev - devold)/(0.1 + abs(dev)) < epsilon) break
+}
 
 final(1)
