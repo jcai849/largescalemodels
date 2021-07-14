@@ -49,7 +49,7 @@ init <- do.dcall(envBase(glmSetup), list(I(form), ddf))
 #ls.str(emerge(chunkRef(init)[[3]]))
 
 epsilon <- 1e-08
-maxit <- 8
+maxit <- 30
 
 dev <- sum(do.dcall(envBase(function(keep) with(keep,
 						fam$dev.resids(y, mu, WEIGHTS))),
@@ -71,7 +71,7 @@ for (iter in 1L:maxit) {
 	invisible(do.dcall(envBase(function(keep, beta_hat) {
 					   assign("beta_hat", beta_hat, keep)
 					   with(keep, {
-							beta <- drop(mm %*% beta_hat) + OFFSET
+							eta <- drop(mm %*% beta_hat) + OFFSET
 							mu <- fam$linkinv(eta)
 							mu.eta.val <- fam$mu.eta(eta)
 							z <- (eta - OFFSET) + (y - mu) / mu.eta.val
