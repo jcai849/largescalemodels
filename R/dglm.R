@@ -2,7 +2,7 @@ dglm <- function(formula, data, verbose=FALSE) {
 	stopifnot(is.distObjRef(data))
 	epsilon	<- 1e-08
 	maxit	<- 30
-	de	<- denvref(data)
+	de	<- denvRef(data)
 	with(de, { # initialise
 		fam		<-stats::binomial()
 		beta_hat	<-NULL
