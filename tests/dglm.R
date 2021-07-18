@@ -14,9 +14,6 @@ cols <- c("Year"="integer","Month"="integer","DayofMonth"="integer",
 
 ddf <- read.lcsv("~/1987.csv", header=TRUE, colTypes=cols, max.size=42*1024^2)
 
-#cat("preview of distributed data frame:\n")
-#preview(ddf)
-
 glmSetup <- function(form, ddf) {
 	a <- ls()
 	keep <- new.env(parent=baseenv())
@@ -44,9 +41,6 @@ glmSetup <- function(form, ddf) {
 form <- Late ~ DepDelay + DepTime + DayOfWeek
 
 init <- do.dcall(envBase(glmSetup), list(I(form), ddf))
-
-#cat("\npreview of kept variables:\n")
-#ls.str(emerge(chunkRef(init)[[3]]))
 
 epsilon <- 1e-08
 maxit <- 30
