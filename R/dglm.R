@@ -18,7 +18,7 @@ dglm <- function(formula, data, verbose=FALSE) {
 		z		<-(eta-OFFSET)+(y-mu)/mu.eta.val
 		w		<-sqrt((WEIGHTS*mu.eta.val^2)/fam$variance(mu))
 	  },
-	  list(formula=I(formula), data=data) result=FALSE)
+	  list(formula=I(formula), data=data), result=FALSE)
 	dev <- sum(with(de, fam$dev.resids(y, mu, WEIGHTS)))
 	for (iter in 1L:maxit) { # reweightin:
 		XtX <- emerge(with(de, crossprod(mm[,,drop=FALSE] * as.numeric(w))))
