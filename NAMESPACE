@@ -1,1 +1,1 @@
-export("dlm")
+export("dlm", "dglm")
