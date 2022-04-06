@@ -1,21 +1,19 @@
-Package: largeScaleModelR
+Package: largescalemodelr
 Type: Package
-Title: Models for LargeScaleR
-Version: 0.1
-Date: 2021-06-21
+Title: Models for largescaler
+Version: 0.2
+Date: 2022-04-07
 Author: Jason Cairns [aut, cre]
 Maintainer: Jason Cairns <jcai849@aucklanduni.ac.nz>
 Authors@R: c(person("Jason", "Cairns", role = c("aut", "cre"),
                     email = "jcai849@aucklanduni.ac.nz"),
              person("Simon", "Urbanek", role = "ths"),
              person("Paul", "Murrell", role = "ths"))
-Description: A selection of models created for the largeScaleR distributed
-	framework. Currently only lm.
+Description: A selection of linear and generalised linear models created for the largescaler distributed framework.
 Depends: R (>= 3.6.0)
-Imports: largeScaleR, biglm
-License: GPL-3
+Imports: largescaler, biglm
+License: MIT
 URL: https://github.com/jcai849/largeScaleModelR
 BugReports: https://github.com/jcai849/largeScaleModelR/issues
 OS_type: unix
 NeedsCompilation: no
-
