@@ -1,5 +1,6 @@
 dglm <- function(formula, data, verbose=FALSE) {
 	stopifnot(inherits(data, "DistributedObject"))
+	formula <- benv(formula)
 
 	epsilon	<- 1e-08
 	maxit	<- 30
@@ -7,7 +8,8 @@ dglm <- function(formula, data, verbose=FALSE) {
 	fam		<- stats::binomial()
 	beta_hat	<- NULL
 	mm		<- do.dcall(stats::model.matrix, list(formula, data))
-	y 		<- do.dcall(function(data, mm, formula) matrix(data[rownames(mm),all.vars(form)[1]],ncol=1), list(data=data, mm=mm, formula=formula))
+	y 		<- do.dcall(function(data, mm, formula) matrix(data[rownames(mm),all.vars(form)[1]],ncol=1),
+				    list(data=data, mm=mm, formula=formula))
 	NOBS 		<- NROW(y)
 	WEIGHTS		<- rep.int(1,NROW(y))
 	OFFSET		<- rep.int(0,NROW(y))
