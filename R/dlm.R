@@ -1,18 +1,17 @@
 dlm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 	stopifnot(inherits(data, "DistributedObject"))
-	stopifnot(length(unclass(data)) > 0L)
-	init <- dbiglm(formula, data[[1]], weights, sandwich)
+	stopifnot(length(as.list(data)) > 0L)
+	init <- dbiglm(formula, as.list(data)[[1]], weights, sandwich)
 	if (length(data) != 1L)
 		largescaler::dreduce(f=biglm::update.biglm,
-				     x=largescaler::data[-1],
+				     x=as.list(data)[[-1]],
 				     init=init)
-	else init
+	else largescaler::DistributedObject(init)
 }
 
 dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
-	stopifnot(inherits(data, "DistributedObject"))
 	sys.call <- curr_call_fun(-1)
-	largescaler::do.dcall(largescalemodelr::biglm_fixed_call,
+	largerscale::remote_call(largescalemodelr::biglm_fixed_call,
 			      list(formula=benv(formula),
 				   data=data,
 				   weights=benv(weights),
