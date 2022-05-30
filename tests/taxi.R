@@ -1,5 +1,6 @@
 library(largescaler)
 
+largerscale::LOCATOR("hadoop1", 9000L)
 hosts <-  paste0("hadoop", 1:8)
 port <- 9001L
 options("largerscaleVerbose" = TRUE)
