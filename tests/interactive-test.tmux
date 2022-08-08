@@ -1,21 +1,11 @@
-split-window ssh hadoop1 R --interactive
-send-keys 'largerscale::locator("hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop1 R --interactive
-send-keys 'largerscale::worker("hadoop1", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop2 R --interactive
-send-keys 'largerscale::worker("hadoop2", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop3 R --interactive
-send-keys 'largerscale::worker("hadoop3", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop4 R --interactive
-send-keys 'largerscale::worker("hadoop4", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop5 R --interactive
-send-keys 'largerscale::worker("hadoop5", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop6 R --interactive
-send-keys 'largerscale::worker("hadoop6", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop7 R --interactive
-send-keys 'largerscale::worker("hadoop7", 9001L, "hadoop1", 9000L, verbose=T)' Enter
-split-window ssh hadoop8 R --interactive
+split-window R --interactive
+send-keys 'largerscale::locator("localhost", 9000L, verbose=T)' Enter
+split-window R --interactive
+send-keys 'largerscale::worker("localhost", 9001L, "localhost", 9000L, verbose=T)' Enter
+split-window R --interactive
+send-keys 'largerscale::worker("localhost", 9002L, "localhost", 9000L, verbose=T)' Enter
+split-window R --interactive
+send-keys 'largerscale::worker("localhost", 9003L, "localhost", 9000L, verbose=T)' Enter
 select-layout tiled
-send-keys 'largerscale::worker("hadoop8", 9001L, "hadoop1", 9000L, verbose=T)' Enter
 run-shell 'sleep 2'
-select-pane -t0; send-keys 'R' Enter 'source("taxi.R", echo=T)' Enter
+select-pane -t0; send-keys 'R' Enter 'source("dlm.R", echo=T)' Enter
