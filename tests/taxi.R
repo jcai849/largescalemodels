@@ -1,9 +1,9 @@
 library(largescaler)
 
-largerscale::LOCATOR("hadoop1", 9000L)
+chunknet::LOCATOR("hadoop1", 9000L)
 hosts <-  paste0("hadoop", 1:8)
 port <- 9001L
-options("largerscaleVerbose" = TRUE)
+options("chunknetVerbose" = TRUE)
 
 paths <- paste0("taxicab-", sprintf("%02d", cumsum(rep(4, 8))-4), ".csv")
 cols <- c("vendor_id"="character",
