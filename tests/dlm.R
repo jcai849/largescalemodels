@@ -1,7 +1,8 @@
 library(largescalemodelr)
+library(largescaler)
 
 LOC_HOST <- "localhost"
-LOC_PORT <- 123456L
+LOC_PORT <- 9000L
 
 orcv::start()
 chunknet::LOCATOR(LOC_HOST, LOC_PORT)
