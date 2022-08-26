@@ -11,13 +11,13 @@ dlm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 
 dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 	sys.call <- curr_call_fun(-1)
-	chunknet::remote_call(largescalemodelr::biglm_fixed_call,
-			      list(formula=benv(formula),
+	chunknet::do.ccall(list(largescalemodelr::biglm_fixed_call),
+		           list(list(formula=benv(formula),
 				   data=data,
 				   weights=benv(weights),
 				   sandwich=sandwich,
-				   sys.call=benv(sys.call)),
-			      target=data)
+				   sys.call=benv(sys.call))),
+			      target=list(data))
 }
 
 biglm_fixed_call <- function(formula, data, weights, sandwich, sys.call) {
