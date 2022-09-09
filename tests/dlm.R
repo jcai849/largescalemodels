@@ -16,5 +16,6 @@ mapply(write.table,
 col.names <- colnames(iris)
 colClasses <- vapply(iris, class, character(1), USE.NAMES=F)
 
-diris <- read.dcsv('localhost', dcsv_paths, col.names=col.names, colClasses=colClasses)
-dlm(Sepal.Width ~ Sepal.Length, diris)
+diris <- read.dcsv(dcsv_paths, col.names=col.names, colClasses=colClasses)
+emerge(diris)
+#dlm(Sepal.Width ~ Sepal.Length, diris)
