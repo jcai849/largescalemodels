@@ -10,7 +10,7 @@ Authors@R: c(person("Jason", "Cairns", role = c("aut", "cre"),
              person("Simon", "Urbanek", role = "ths"),
              person("Paul", "Murrell", role = "ths"))
 Description: A selection of linear and generalised linear models created for the largescaler distributed framework.
-Depends: R (>= 3.6.0)
+Depends: biglm, R (>= 3.6.0)
 Imports: largescaler, chunknet, biglm
 License: MIT
 URL: https://github.com/jcai849/largeScaleModelR
