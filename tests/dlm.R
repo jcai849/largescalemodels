@@ -17,5 +17,4 @@ col.names <- colnames(iris)
 colClasses <- vapply(iris, class, character(1), USE.NAMES=F)
 
 diris <- read.dcsv(dcsv_paths, col.names=col.names, colClasses=colClasses)
-emerge(diris)
-#dlm(Sepal.Width ~ Sepal.Length, diris)
+dlm(Sepal.Width ~ Sepal.Length, diris)
