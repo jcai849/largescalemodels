@@ -1,23 +1,23 @@
 dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 	stopifnot(inherits(data, "DistributedObject"))
-	formula <- benv(formula)
+	attr(formula, ".Environment") <- NULL
 
-	d.model.matrix	<- d(stats::model.matrix)
-	d.linkfun	<- d(fam$linkfun)
-	d.linkinv	<- d(fam$linkinv)
-	d.mu.eta	<- d(fam$mu.eta)
-	d.dev.resids	<- d(fam$dev.resids)
-	d.variance	<- d(fam$variance)
-	d.y		<- d(function(data, mm, formula) matrix(data[rownames(mm), all.vars(formula)[1]], ncol=1))
 	d.XtX		<- d(function(mm, w) crossprod(mm[,,drop=FALSE] * as.numeric(w)))
 	d.Xty		<- d(function(mm, w, z) t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w)))
+	d.dev.resids	<- d(fam$dev.resids)
 	d.eta		<- d(function(mm, beta_hat, OFFSET) drop(mm %*% beta_hat) + OFFSET)
+	d.linkfun	<- d(fam$linkfun)
+	d.linkinv	<- d(fam$linkinv)
+	d.model.matrix	<- d(function(object, data) {browser(); stats::model.matrix(object, data)})
+	d.mu.eta	<- d(fam$mu.eta)
+	d.variance	<- d(fam$variance)
+	d.y		<- d(function(data, mm, formula) {matrix(data[rownames(mm), all.vars(formula)[1]], ncol=1)})
 
 	epsilon	<- 1e-08
 	maxit	<- 30
 
 	beta_hat	<- NULL
-	mm		<- d.model.matrix(formula, data)
+	mm		<- d.model.matrix(formula, data=data)
 	y 		<- d.y(data, mm, formula)
 	NOBS 		<- NROW(y)
 	WEIGHTS		<- rep.int(1, NROW(y))

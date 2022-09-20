@@ -1,5 +1,7 @@
-library(largescalemodelr)
+source("write_load.R")
 
-source("taxi.R")
-x <- dglm(passenger_count ~ tip_amount, fam=stats::poisson(), taxicab)
+dbirthwt <- write_load(MASS::birthwt)
+lbirthwt <- emerge(dbirthwt)
+debug(dglm)
+dbirthwtglm <- dglm(low ~ age + lwt + smoke, dbirthwt, fam=stats::binomial())
 x
