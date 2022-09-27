@@ -1,22 +1,12 @@
 dlm <- function(formula, data, weights=NULL, sandwich=FALSE) {
-	if (!isNamespaceLoaded("biglm")) {
-		loadNamespace("biglm")
-		on.exit(unloadNamespace("biglm"))
-	}
 	stopifnot(inherits(data, "DistributedObject"))
 	stopifnot(length(as.list(data)) > 0L)
 	init <- dbiglm(formula, as.list(data)[[1]], weights, sandwich)
 	if (length(as.list(data)) != 1L)
-		largescaler::dReduce(f=update_dlm,
+		largescaler::dReduce(f=update,
 				     x=as.list(data)[-1],
 				     init=init)
 	else largescaler::DistributedObject(init)
-}
-
-update_dlm <- function(x, y) {
-	loadNamespace("biglm")
-	on.exit(unloadNamespace("biglm"))
-	update(x, y)
 }
 
 dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
@@ -31,7 +21,8 @@ dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 }
 
 biglm_fixed_call <- function(formula, data, weights, sandwich, sys.call) {
-	rval <- biglm::biglm(formula, data, weights, sandwich)
+	library(biglm)
+	rval <- biglm(formula, data, weights, sandwich)
 	rval$call <- substitute(sys.call)
 	rval
 }
