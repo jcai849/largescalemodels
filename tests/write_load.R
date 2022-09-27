@@ -1,5 +1,4 @@
 library(largescalemodelr)
-library(largescaler)
 
 LOC_HOST <- "localhost"
 LOC_PORT <- 9000L
@@ -22,5 +21,5 @@ write_load <- function(dataset) {
 	       MoreArgs=list(sep=',', row.names=F, col.names=F), SIMPLIFY=FALSE)
 	col.names <- colnames(dataset)
 	colClasses <- vapply(dataset, class, character(1), USE.NAMES=F)
-	dataset <- read.dcsv(dcsv_paths, col.names=col.names, colClasses=colClasses)
+	dataset <- largescaler::read.dcsv(dcsv_paths, col.names=col.names, colClasses=colClasses)
 }

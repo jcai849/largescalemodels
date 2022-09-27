@@ -1,7 +1,6 @@
 source("write_load.R")
 
 dbirthwt <- write_load(MASS::birthwt)
-lbirthwt <- emerge(dbirthwt)
-debug(dglm)
+lbirthwt <- largescaler::emerge(dbirthwt)
 dbirthwtglm <- dglm(low ~ age + lwt + smoke, dbirthwt, fam=stats::binomial())
-x
+lbirthwtglm <- glm(low ~ age + lwt + smoke, MASS::birthwt, fam=stats::binomial())
