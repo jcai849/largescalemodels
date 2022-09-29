@@ -2,8 +2,8 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 	stopifnot(inherits(data, "DistributedObject"))
 	environment(formula) <- baseenv()
 
-	d.XtX		<- d(function(mm, w) Addible(crossprod(mm[,,drop=FALSE] * as.numeric(w))))
-	d.Xty		<- d(function(mm, w, z) Addible(t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w))))
+	d.XtX		<- d(function(mm, w) as.darray(crossprod(mm[,,drop=FALSE] * as.numeric(w))))
+	d.Xty		<- d(function(mm, w, z) as.darray(t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w))))
 	d.dev.resids	<- d(fam$dev.resids)
 	d.eta		<- d(function(mm, beta_hat, OFFSET) drop(mm %*% beta_hat) + OFFSET)
 	d.linkfun	<- d(fam$linkfun)
@@ -16,8 +16,8 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 	epsilon	<- 1e-08
 	maxit	<- 30
 
-	mm		<- d.model.matrix(I(formula), data)
-	y 		<- d.y(data, mm, I(formula))
+	mm		<- d.model.matrix(formula, data)
+	y 		<- d.y(data, mm, formula)
 	WEIGHTS		<- 1
 	OFFSET		<- 0
 	mustart		<- (WEIGHTS * y + 0.5) / (WEIGHTS + 1)
@@ -33,7 +33,7 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 		XtX		<- d.XtX(mm, w)
 		Xty		<- d.Xty(mm, w, z)
 		beta_hat 	<- solve(XtX, Xty)
-		eta		<- d.eta(mm, I(beta_hat), OFFSET)
+		eta		<- d.eta(mm, beta_hat, OFFSET)
 		mu		<- d.linkinv(eta)
 		mu.eta.val	<- d.mu.eta(eta)
 		z		<- (eta - OFFSET) + (y - mu) / mu.eta.val
@@ -45,5 +45,5 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 		gc()
 	}
 
-	emerge(beta_hat)
+	beta_hat[]
 }
