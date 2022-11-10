@@ -1,19 +1,22 @@
 library(largescaler)
-library(largescalemodelr)
 
-ADDRS <- paste0("fosstatsprd0", 2:4, ".its.auckland.ac.nz")
 PATHS <- list.files("/course/data/airline/full", full.names=TRUE)
 
-#init_locator(ADDRS[1], 9000L)
-#mapply(init_worker, rep(ADDRS, each=2), 9001L:9002L)
 orcv::start()
-chunknet::LOCATOR("localhost", 9000L)
+init_locator("localhost", 9000L)
+init_worker("localhost", 9001L)
+init_worker("localhost", 9002L)
+init_worker("localhost", 9003L)
+init_worker("localhost", 9004L)
+init_worker("localhost", 9005L)
+init_worker("localhost", 9006L)
+init_worker("localhost", 9007L)
+#mapply(init_worker, "localhost", seq(9001L, length.out=6))
 
 lairline <- read.csv(PATHS[length(PATHS)], nrows=1000)
-col.names <- colnames(lairline)
-colClasses <- vapply(lairline, class, character(1), USE.NAMES=FALSE)
+colClasses <- vapply(lairline, class, character(1))
 
-dairline <- read.dcsv(PATHS, col.names=col.names, colClasses=colClasses, header=T)
+dairline <- read.dcsv(PATHS, header=T, colClasses=colClasses)
 
-#dairlinelm <- dlm(ArrDelay ~ DepDelay + Distance, data=dairline)
-#dairlineglm <- dglm(Cancelled ~ Year + SecurityDelay, data=dairline, fam=stats::binomial())
+dairlinelm <- dlm(ArrDelay ~ DepDelay + Distance, data=dairline)
+dairlineglm <- dglm(Cancelled ~ Year + SecurityDelay, data=dairline, fam=stats::binomial())
