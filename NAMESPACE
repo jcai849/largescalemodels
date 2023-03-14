@@ -1,2 +1,2 @@
 import(biglm, largescaler)
-export("dlm", "dglm")
+export("dlm", "dglm", "dlasso")
