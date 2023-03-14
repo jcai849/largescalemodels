@@ -1,11 +1,13 @@
+#!/usr/bin/env Rscript
+
 # Params
 m <- 20
-n <- 5000
+n <- 50000
 N <- 5
 
 lambda <- 3
 rho <- 3
-tolerance <- 1E-3
+tolerance <- 1
 kappa <- lambda/(rho*N)
 
 # Functions
@@ -18,7 +20,9 @@ argmin <- function(init, f) optim(init, f)$par
 # Data
 A <- matrix(runif(m*n), n, m)
 A[,1] <- 1
-b <- 27 + A[,3] + 8*A[,14] + 2*A[,15] + 82*A[,9] + rnorm(n)
+x_actual <- matrix(0, m)
+x_actual[c(1, 3, 14, 15, 9),] <- c(27, 1, 8, 2, 82)
+b <- A %*% x_actual
 
 chunks_i <- tapply(seq(n), cut(seq(n), N), identity, simplify=F)
 A <- lapply(chunks_i, function(i, x) x[i,], A)
@@ -41,8 +45,11 @@ while (l1_norm(z_curr - z_prev) > tolerance) {
                             argmin(x_prev, function(x_prev) (1/2)*l2_norm(A %*% x_prev - b)^2 + (rho/2)*l2_norm(x_prev - z_prev + u_prev)^2),
                     x_prev, A, b, u_prev,
                     MoreArgs = list(rho, z_prev), SIMPLIFY = FALSE)
-    z_curr <- S(mean(unlist(x_curr)) + mean(unlist(u_curr)))
+    z_curr <- S(rowMeans(array(unlist(x_curr), dim=list(m, N))) + rowMeans(array(unlist(u_curr), dim=list(m, N))))
     u_curr <- mapply(function(u_prev, x_curr, z_curr) u_prev + x_curr - z_curr,
                     u_prev, x_curr,
                     MoreArgs = list(z_curr), SIMPLIFY = FALSE)
 }
+cat("Iteration complete.\n\n")
+cat("Estimated and actual x:\n")
+for (i in seq(m))cat(format(cbind(z_curr, x_actual))[i,], '\n')
