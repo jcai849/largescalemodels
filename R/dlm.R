@@ -17,7 +17,7 @@ dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 				     weights=benv(weights),
 				     sandwich=sandwich,
 				     sys.call=benv(sys.call))),
-			    target=data)
+			    target=data)[[1]]
 }
 
 biglm_fixed_call <- function(formula, data, weights, sandwich, sys.call) {
