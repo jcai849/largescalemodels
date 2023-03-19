@@ -19,7 +19,6 @@ write_load <- function(dataset) {
 	       split(dataset, chunk_map),
 	       dcsv_paths,
 	       MoreArgs=list(sep=',', row.names=F, col.names=F), SIMPLIFY=FALSE)
-	col.names <- colnames(dataset)
-	colClasses <- vapply(dataset, class, character(1), USE.NAMES=F)
-	dataset <- largescaler::read.dcsv(dcsv_paths, col.names=col.names, colClasses=colClasses)
+	colClasses <- vapply(dataset, class, character(1), USE.NAMES=T)
+	dataset <- largescaler::read.dcsv(dcsv_paths, colClasses=colClasses)
 }
