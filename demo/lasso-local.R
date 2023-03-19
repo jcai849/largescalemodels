@@ -45,7 +45,9 @@ while (l1_norm(z_curr - z_prev) > tolerance) {
                             argmin(x_prev, function(x_prev) (1/2)*l2_norm(A %*% x_prev - b)^2 + (rho/2)*l2_norm(x_prev - z_prev + u_prev)^2),
                     x_prev, A, b, u_prev,
                     MoreArgs = list(rho, z_prev), SIMPLIFY = FALSE)
-    z_curr <- S(rowMeans(array(unlist(x_curr), dim=list(m, N))) + rowMeans(array(unlist(u_curr), dim=list(m, N))))
+    x_local <- unlist(x_curr); u_local <- unlist(u_curr)
+    dim(x_local) <- c(m, N); dim(u_local) <- c(m, N)
+    z_curr <- S(rowMeans(x_local) + rowMeans(u_local))
     u_curr <- mapply(function(u_prev, x_curr, z_curr) u_prev + x_curr - z_curr,
                     u_prev, x_curr,
                     MoreArgs = list(z_curr), SIMPLIFY = FALSE)
