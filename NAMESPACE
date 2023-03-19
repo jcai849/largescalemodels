@@ -1,2 +1,4 @@
 import(biglm, largescaler)
 export("dlm", "dglm", "dlasso")
+
+S3method(combine, ColSplit)

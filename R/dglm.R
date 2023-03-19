@@ -2,8 +2,8 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 	stopifnot(inherits(data, "DistributedObject"))
 	environment(formula) <- baseenv()
 
-	d.XtX		<- d(function(mm, w) as.colSplit(crossprod(mm[,,drop=FALSE] * as.numeric(w))))
-	d.Xty		<- d(function(mm, w, z) as.colSplit(t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w))))
+	d.XtX		<- d(function(mm, w) as.ColSplit(crossprod(mm[,,drop=FALSE] * as.numeric(w))))
+	d.Xty		<- d(function(mm, w, z) as.ColSplit(t(mm[,,drop=FALSE] * as.numeric(w)) %*% (z * as.numeric(w))))
 	d.dev.resids	<- d(fam$dev.resids)
 	d.eta		<- d(function(mm, beta_hat, OFFSET) drop(mm %*% beta_hat) + OFFSET)
 	d.linkfun	<- d(fam$linkfun)
@@ -48,8 +48,8 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 	beta_hat[]
 }
 
-combine.colSplit <- function(x, ...) rowSums(simplify2array(x), dims=2)
-as.colSplit <- function(x) {
-	class(x) <- unique.default(c("colSplit", oldClass(x)))
+combine.ColSplit <- function(x, ...) rowSums(simplify2array(x), dims=2)
+as.ColSplit <- function(x) {
+	class(x) <- unique.default(c("ColSplit", oldClass(x)))
 	x
 }
