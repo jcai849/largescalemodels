@@ -46,7 +46,7 @@ while (l1_norm(z_curr - z_prev) > tolerance) {
                     x_prev, A, b, u_prev,
                     MoreArgs = list(rho, z_prev), SIMPLIFY = FALSE)
     x_local <- unlist(x_curr); u_local <- unlist(u_curr)
-    dim(x_local) <- c(m, N); dim(u_local) <- c(m, N)
+    dim(x_local) <- dim(u_local) <- c(m, N)
     z_curr <- S(rowMeans(x_local) + rowMeans(u_local))
     u_curr <- mapply(function(u_prev, x_curr, z_curr) u_prev + x_curr - z_curr,
                     u_prev, x_curr,
