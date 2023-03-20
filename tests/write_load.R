@@ -12,7 +12,7 @@ file_paths <- replicate(nworkers*chunks_on_each_worker, tempfile())
 
 dwrite_table <- function(dataset, sep) {
 	chunk_groups <- seq(N)
-	nobs <- floor(nrow(dataset)/(nworkers*chunks_on_each_worker))
+	nobs <- floor(nrow(dataset)/(N))
 	first_chunk_map <- rep(chunk_groups[-length(chunk_groups)], each=nobs)
 	last_chunk_map <- rep(chunk_groups[length(chunk_groups)], NROW(dataset)-length(first_chunk_map))
 	chunk_map <-  c(first_chunk_map, last_chunk_map)
