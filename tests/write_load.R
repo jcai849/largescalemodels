@@ -29,6 +29,6 @@ write_load <- function(dataset) {
 }
 
 write_load_matrix <- function(dataset) {
-	dwrite_table(dataset, '|')
+	dwrite_table(as.data.frame(dataset), '|')
 	largescaler::read.dmatrix(file_paths, ddim=c(N, dim(dataset)[2]))
 }
