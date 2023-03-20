@@ -45,7 +45,7 @@ dglm <- function(formula, data, fam=stats::binomial(), verbose=FALSE) {
 		gc()
 	}
 
-	beta_hat[]
+	beta_hat
 }
 
 combine.ColSplit <- function(x, ...) rowSums(simplify2array(x), dims=2)
