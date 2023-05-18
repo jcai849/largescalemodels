@@ -5,3 +5,8 @@
              `---'                                                       
 
         Providing sample models for the largescaler system
+
+Demo (requires tmux, and ports 9000:9003 open):
+
+$
+$ . `Rscript -e 'cat(system.file("exec", "demo-session.sh", package="largescalemodelr"))'`
