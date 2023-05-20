@@ -8,5 +8,7 @@
 
 Demo (requires tmux, and ports 9000:9003 open):
 
-$
-$ . `Rscript -e 'cat(system.file("exec", "demo-session.sh", package="largescalemodelr"))'`
+$ . `Rscript -e 'cat(system.file("exec", "demo-session.sh", package="largescaler"))'`
+R> demo("init", package="largescaler", echo=F)
+R> demo("populate", package="largescaler", echo=F)
+R> largescalemodelr::dlasso(dA, db, tolerance=1, rho=3, lambda=3)
