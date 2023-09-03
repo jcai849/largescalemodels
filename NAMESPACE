@@ -1,4 +1,4 @@
-import(biglm, largescaler)
+import(biglm, largescaleobjects)
 export("dlm", "dglm", "dlasso")
 
 S3method(combine, ColSplit)

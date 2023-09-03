@@ -3,15 +3,15 @@ dlm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 	stopifnot(length(as.list(data)) > 0L)
 	init <- dbiglm(formula, as.list(data)[[1]], weights, sandwich)
 	if (length(as.list(data)) != 1L)
-		largescaler::dReduce(f=update,
+		largescaleobjects::dReduce(f=update,
 				     x=as.list(data)[-1],
 				     init=init)
-	else largescaler::DistributedObject(init)
+	else largescaleobjects::DistributedObject(init)
 }
 
 dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 	sys.call <- curr_call_fun(-1)
-	chunknet::do.ccall(list(biglm_fixed_call),
+	largescalechunks::do.ccall(list(biglm_fixed_call),
 		           list(list(formula=benv(formula),
 				     data=data,
 				     weights=benv(weights),
