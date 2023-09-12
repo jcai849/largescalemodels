@@ -1,9 +1,9 @@
-library(largescaleobjects)
-library(largescalemodels)
+library(largescaler)
+library(largescalemodelr)
 
 N <- 20
 
-largescalemessages::start()
+orcv::start()
 init_locator("localhost", 9000L)
 mapply(init_worker, "localhost", seq(9001L, length.out=N))
 
@@ -44,5 +44,5 @@ sink(paste0("dlasso-benchmark-",uuid::UUIDgenerate()))
 print(timing)
 sink()
 
-largescalechunks::kill_all_nodes()
+chunknet::kill_all_nodes()
 q("no")

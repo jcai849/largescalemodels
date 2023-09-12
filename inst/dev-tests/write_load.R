@@ -1,10 +1,10 @@
-library(largescalemodels)
+library(largescalemodelr)
 
 LOC_HOST <- "localhost"
 LOC_PORT <- 9000L
 
-largescalemessages::start()
-largescalechunks::LOCATOR(LOC_HOST, LOC_PORT)
+orcv::start()
+chunknet::LOCATOR(LOC_HOST, LOC_PORT)
 chunks_on_each_worker <- 2
 nworkers <- 3
 N <- nworkers*chunks_on_each_worker
@@ -25,10 +25,10 @@ dwrite_table <- function(dataset, sep) {
 write_load <- function(dataset) {
 	dwrite_table(dataset, ',')
 	colClasses <- vapply(dataset, class, character(1), USE.NAMES=T)
-	largescaleobjects::read.dcsv(file_paths, colClasses=colClasses)
+	largescaler::read.dcsv(file_paths, colClasses=colClasses)
 }
 
 write_load_matrix <- function(dataset) {
 	dwrite_table(as.data.frame(dataset), '|')
-	largescaleobjects::read.dmatrix(file_paths, ddim=c(N, 1))
+	largescaler::read.dmatrix(file_paths, ddim=c(N, 1))
 }

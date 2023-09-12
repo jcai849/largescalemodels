@@ -1,6 +1,6 @@
-Package: largescalemodels
+Package: largescalemodelr
 Type: Package
-Title: Models for Large Scale R
+Title: Models for largescaler
 Version: 1.0
 Date: 2022-10-14
 Author: Jason Cairns [aut, cre]
@@ -9,11 +9,11 @@ Authors@R: c(person("Jason", "Cairns", role = c("aut", "cre"),
                     email = "jcai849@aucklanduni.ac.nz"),
              person("Simon", "Urbanek", role = "ths"),
              person("Paul", "Murrell", role = "ths"))
-Description: A selection of linear and generalised linear models created for the Large Scale R distributed framework.
+Description: A selection of linear and generalised linear models created for the largescaler distributed framework.
 Depends: R (>= 3.6.0)
-Imports: largescaleobjects, largescalechunks, biglm
+Imports: largescaler, chunknet, biglm
 License: MIT
-URL: https://github.com/jcai849/largescalemodels
-BugReports: https://github.com/jcai849/largescalemodels/issues
+URL: https://github.com/jcai849/largescalemodelr
+BugReports: https://github.com/jcai849/largescalemodelr/issues
 OS_type: unix
 NeedsCompilation: no

@@ -1,8 +1,8 @@
-library(largescaleobjects)
+library(largescaler)
 
 PATHS <- list.files("/course/data/airline/full", full.names=TRUE)
 
-largescalemessages::start()
+orcv::start()
 init_locator("localhost", 9000L)
 init_worker("localhost", 9001L)
 init_worker("localhost", 9002L)
