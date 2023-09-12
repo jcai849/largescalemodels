@@ -1,5 +1,5 @@
 library(largescaleobjects)
-library(largescalemodelr)
+library(largescalemodels)
 
 N <- 20
 

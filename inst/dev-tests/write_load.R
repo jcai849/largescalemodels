@@ -1,4 +1,4 @@
-library(largescalemodelr)
+library(largescalemodels)
 
 LOC_HOST <- "localhost"
 LOC_PORT <- 9000L
@@ -32,3 +32,5 @@ write_load_matrix <- function(dataset) {
 	dwrite_table(as.data.frame(dataset), '|')
 	largescaleobjects::read.dmatrix(file_paths, ddim=c(N, 1))
 }
+
+wl <- function(...) {for (d in list(...)) write_load(d)}

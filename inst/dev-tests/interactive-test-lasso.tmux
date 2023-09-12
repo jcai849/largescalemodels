@@ -8,4 +8,4 @@ split-window R --interactive
 send-keys 'library(largescaleobjects); chunknet::worker_node("localhost", 9003L, "localhost", 9000L, verbose=T)' Enter
 select-layout tiled
 run-shell 'sleep 2'
-select-pane -t0; send-keys 'R' Enter 'source("dlasso.R", echo=T)' Enter
+select-pane -t0; send-keys 'R && tmux kill-session' Enter 'source("dlasso.R", echo=T)' Enter

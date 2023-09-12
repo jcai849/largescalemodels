@@ -1,4 +1,4 @@
-Package: largescalemodelr
+Package: largescalemodels
 Type: Package
 Title: Models for largescaleobjects
 Version: 1.0
@@ -13,7 +13,8 @@ Description: A selection of linear and generalised linear models created for the
 Depends: R (>= 3.6.0)
 Imports: largescaleobjects, chunknet, biglm
 License: MIT
-URL: https://github.com/jcai849/largescalemodelr
-BugReports: https://github.com/jcai849/largescalemodelr/issues
+URL: https://github.com/jcai849/largescalemodels
+BugReports: https://github.com/jcai849/largescalemodels/issues
 OS_type: unix
 NeedsCompilation: no
+LazyData: true
