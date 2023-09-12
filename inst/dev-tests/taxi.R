@@ -1,4 +1,4 @@
-library(largescaler)
+library(largescaleobjects)
 
 chunknet::LOCATOR("hadoop1", 9000L)
 hosts <-  paste0("hadoop", 1:8)

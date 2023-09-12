@@ -25,10 +25,10 @@ dwrite_table <- function(dataset, sep) {
 write_load <- function(dataset) {
 	dwrite_table(dataset, ',')
 	colClasses <- vapply(dataset, class, character(1), USE.NAMES=T)
-	largescaler::read.dcsv(file_paths, colClasses=colClasses)
+	largescaleobjects::read.dcsv(file_paths, colClasses=colClasses)
 }
 
 write_load_matrix <- function(dataset) {
 	dwrite_table(as.data.frame(dataset), '|')
-	largescaler::read.dmatrix(file_paths, ddim=c(N, 1))
+	largescaleobjects::read.dmatrix(file_paths, ddim=c(N, 1))
 }
