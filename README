@@ -1,7 +1,7 @@
 |                                     |                     |     |    
 |  ,---.,---.,---.,---.,---.,---.,---.|  ,---.,-.-.,---.,---|,---.|  ,---.
-|  ,---||    |   ||---'`---.|    ,---||  |---'| | ||   ||   ||---'|  |
-`-'`---^`    `---|`---'`---'`---'`---^`-'`---'` ' '`---'`---'`---'`-'`
+|  ,---||    |   ||---'`---.|    ,---||  |---'| | ||   ||   ||---'|  `---.
+`-'`---^`    `---|`---'`---'`---'`---^`-'`---'` ' '`---'`---'`---'`-'`---'
              `---'                                                       
 
         Providing sample models for the largescaleobjects system
@@ -11,4 +11,4 @@ Demo (requires tmux, and ports 9000:9003 open):
 $ . `Rscript -e 'cat(system.file("exec", "demo-session.sh", package="largescaleobjects"))'`
 R> demo("init", package="largescaleobjects", echo=F)
 R> demo("populate", package="largescaleobjects", echo=F)
-R> largescalemodelr::dlasso(dA, db, tolerance=1, rho=3, lambda=3)
+R> largescalemodels::dlasso(dA, db, tolerance=1, rho=3, lambda=3)
