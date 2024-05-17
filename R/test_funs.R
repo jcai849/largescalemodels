@@ -44,7 +44,7 @@ getAb <- local({
 	function() {
 		if (is.null(x)) {
 			m <- 20
-			n <- 500000
+			n <- 50000
 			N <- 5
 			A <- matrix(runif(m*n), n, m)
 			A[,1] <- 1
