@@ -1,8 +1,8 @@
 Package: largescalemodels
 Type: Package
 Title: Models for largescaleobjects
-Version: 1.2
-Date: 2022-10-14
+Version: 1.3
+Date: 2024-06-06
 Author: Jason Cairns [aut, cre]
 Maintainer: Jason Cairns <jcai849@aucklanduni.ac.nz>
 Authors@R: c(person("Jason", "Cairns", role = c("aut", "cre"),
