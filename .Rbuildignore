@@ -1,0 +1,9 @@
+^\.envrc$
+^\.direnv$
+^\.git$
+^\.github$
+^README\.md$
+^flake\.nix$
+^flake\.lock$
+^\.direnv/
+^makefile$
