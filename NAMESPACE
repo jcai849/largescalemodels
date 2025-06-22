@@ -1,4 +1,7 @@
-import(biglm, largescaleobjects)
+import(biglm, largescaleobjects, orcv)
+importFrom("stats", "runif", "update")
+importFrom("utils", "write.table")
+
 export("dlm", "dglm", "dlasso")
 
 S3method(combine, ColSplit)
