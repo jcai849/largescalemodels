@@ -21,7 +21,7 @@ dbiglm <- function(formula, data, weights=NULL, sandwich=FALSE) {
 }
 
 biglm_fixed_call <- function(formula, data, weights, sandwich, sys.call) {
-	library(biglm)
+	requireNamespace("biglm")
 	rval <- biglm(formula, data, weights, sandwich)
 	rval$call <- substitute(sys.call)
 	rval
