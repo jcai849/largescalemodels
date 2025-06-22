@@ -1,20 +1,14 @@
 Package: largescalemodels
 Type: Package
-Title: Models for largescaleobjects
+Title: Models for Largescaleobjects
 Version: 1.3
-Date: 2024-06-06
+Date: 2025-06-23
 Author: Jason Cairns [aut, cre]
 Maintainer: Jason Cairns <jcai849@aucklanduni.ac.nz>
-Authors@R: c(person("Jason", "Cairns", role = c("aut", "cre"),
-                    email = "jcai849@aucklanduni.ac.nz"),
-             person("Simon", "Urbanek", role = "ths"),
-             person("Paul", "Murrell", role = "ths"))
 Description: A selection of linear and generalised linear models created for the largescaleobjects distributed framework.
 Depends: R (>= 3.6.0)
-Imports: largescaleobjects, chunknet, biglm
+Imports: largescaleobjects, chunknet, orcv, biglm
 License: MIT
-URL: https://github.com/jcai849/largescalemodels
-BugReports: https://github.com/jcai849/largescalemodels/issues
 OS_type: unix
 NeedsCompilation: no
 LazyData: true
